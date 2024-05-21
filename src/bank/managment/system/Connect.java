@@ -11,7 +11,7 @@ public class Connect {
     Connect(){
         try {
             //MYSQL Database JDBC connectivity
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys","root","@omkar143");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys","root","root123");
             System.out.println("Connection Establisch");
 
             stmt=con.createStatement();
