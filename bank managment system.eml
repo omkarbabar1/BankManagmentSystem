@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<contentEntry url="jar://$USER_HOME$/Downloads/jcalendar-tz-1.3.3-4.jar!/"/>
+	<contentEntry url="jar://$USER_HOME$/Downloads/mysql-connector-java-8.0.28.jar!/"/>
+</component>
