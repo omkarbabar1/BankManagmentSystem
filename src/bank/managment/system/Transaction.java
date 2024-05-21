@@ -3,8 +3,6 @@ package bank.managment.system;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.sql.ResultSet;
-import javax.lang.model.element.Name;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -29,11 +27,11 @@ public class Transaction extends JFrame implements ActionListener{
         l1.setFont(new Font("System", Font.BOLD, 16));
 
 
-        l5 = new JLabel("Welcome "+"");
+        /*l5 = new JLabel("Welcome "+"");
         l5.setForeground(Color.WHITE);
         l5.setFont(new Font("System", Font.BOLD, 16));
         l5.setBounds(235,350,700,35);
-        l2.add(l5);
+        l2.add(l5);*/
 
 
 
@@ -137,23 +135,6 @@ public class Transaction extends JFrame implements ActionListener{
             System.out.println(er);
         }
     }
-    public static String getname(String pin){
-            String username = "";
-        try {
-            Connect c = new Connect();
-            ResultSet rs = c.stmt.executeQuery("select Name from login where '"+pin+"'");
-            while (rs.next()){
-            username = rs.getString("Name");
-                System.out.println(username);
-            }
-
-        }catch (Exception eaa){
-            System.out.println(eaa);
-        }
-        System.out.println(username);
-        return username;
-    }
-
     public static void main(String[] args){
         new Transaction("").setVisible(true);
 
