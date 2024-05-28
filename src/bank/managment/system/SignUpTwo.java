@@ -68,7 +68,7 @@ public class SignUpTwo extends JFrame implements ActionListener{
         b = new JButton("Next");
         b.setFont(new Font("Raleway", Font.BOLD, 14));
         b.setBackground(Color.BLACK);
-        b.setForeground(Color.WHITE);
+        b.setForeground(Color.black);
 
         t1 = new JTextField();
         t1.setFont(new Font("Raleway", Font.BOLD, 14));
