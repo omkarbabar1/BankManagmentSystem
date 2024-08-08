@@ -3,6 +3,7 @@ package bank.managment.system;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.PreparedStatement;
 import javax.swing.*;
 
 public class SignUpTwo extends JFrame implements ActionListener{
@@ -235,12 +236,24 @@ public class SignUpTwo extends JFrame implements ActionListener{
             if(t2.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Fill all the required fields");
             }else{
-                Connect c1 = new Connect();
-                String q1 = "insert into signuptwo values('"+formno+"','"+religion+"','"+category+"','"+income+"','"+education+"','"+occupation+"','"+pan+"','"+aadhar+"','"+scitizen+"','"+eaccount+"')";
-                c1.stmt.executeUpdate(q1);
-
-                new SignUpThree(formno).setVisible(true);
-                setVisible(false);
+                Connect c = new Connect();
+                PreparedStatement preparedStatement =c.con.prepareStatement("INSERT INTO signuptwo(formno, religion, category, income, education, occupation, pan, aadhar, seniorcitizen, existingaccount) VALUES(?,?,?,?,?,?,?,?,?,?)");
+                preparedStatement.setString(1,formno);
+                preparedStatement.setString(2,religion);
+                preparedStatement.setString(3,category);
+                preparedStatement.setString(4,income);
+                preparedStatement.setString(5,education);
+                preparedStatement.setString(6,occupation);
+                preparedStatement.setString(7,pan);
+                preparedStatement.setString(8,aadhar);
+                preparedStatement.setString(9,scitizen);
+                preparedStatement.setString(10,eaccount);
+                int affrow=preparedStatement.executeUpdate();
+                if (affrow>0) {
+                    System.out.println(affrow+" Data Insert Sign-Up Two Page");
+                    new SignUpThree(formno).setVisible(true);
+                    setVisible(false);
+                }
             }
 
 

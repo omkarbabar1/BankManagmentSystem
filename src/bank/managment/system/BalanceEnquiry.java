@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 
@@ -54,7 +55,9 @@ public class BalanceEnquiry  extends JFrame implements ActionListener {
             int balance = 0;
             try {
                 Connect c = new Connect();
-                ResultSet rs = c.stmt.executeQuery("select * from bank where pin = '"+pin+"'");
+                PreparedStatement preparedStatement=c.con.prepareStatement("select * from bank where pin = ? ");
+                preparedStatement.setString(1,pin);
+                ResultSet rs = preparedStatement.executeQuery();
 
                 while (rs.next()) {
                     if (rs.getString("type").equals("Deposit")) {

@@ -93,7 +93,11 @@ public class FastCash extends JFrame implements ActionListener {
                 Date date = new Date();
                 new progressBar(pin).setVisible(true);
                 Connect c = new Connect();
-                c.stmt.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Withdrawl', '"+amount+"')");
+                PreparedStatement preparedStatement=c.con.prepareStatement("INSERT INTO bank(pin, date, type, amount) values(?,?, 'Withdrawl', ?)");
+                preparedStatement.setString(1,pin);
+                preparedStatement.setString(2,date+"");
+                preparedStatement.setString(3,amount);
+                preparedStatement.executeUpdate();
                 JOptionPane.showMessageDialog(null, "Rs. "+amount+" Withdraw Successfully");
 
                 setVisible(false);

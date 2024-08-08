@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.Random;
 
@@ -195,7 +196,7 @@ public class SignUpOne extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String name =NameTextFill.getText();
                 String fathername = FaTextFill.getText();
-                String Adress = AdressTextFill.getText();
+                String adress = AdressTextFill.getText();
                 String pincode = PinCodeTextFill.getText();
                 String city = cityTextFill.getText();
                 String email = EmailTextFill.getText();
@@ -221,7 +222,7 @@ public class SignUpOne extends JFrame {
                         JOptionPane.showMessageDialog(null,"Name is Required");
                         if (fathername.equals("")) {
                             JOptionPane.showMessageDialog(null,"Father Name is Required");
-                            if (Adress.equals("")) {
+                            if (adress.equals("")) {
                                 JOptionPane.showMessageDialog(null,"Adress is Required");
                                 if (pincode.equals("")) {
                                     JOptionPane.showMessageDialog(null,"Pincode is Required");
@@ -248,10 +249,26 @@ public class SignUpOne extends JFrame {
                         }
                     }else {
                         Connect c = new Connect();
-                        c.stmt.executeUpdate("insert into signup values('"+formNo+"','"+name+"','"+fathername+"','"+gender+"','"+date+"','"+email+"','"+Adress+"','"+city+"','"+pincode+"','"+married+"')");
-                        System.out.println("One Row inserted......Sucesss...!!!!");
-                        setVisible(false);
-                        new SignUpTwo(formNo).setVisible(true);
+                        PreparedStatement preparedStatement =c.con.prepareStatement("INSERT INTO signup(Form_no,Name,Father_Name,Gender,Birth_Date,email,Adress,city,pincode,married_status) values(?,?,?,?,?,?,?,?,?,?)");
+                        preparedStatement.setString(1,formNo);
+                        preparedStatement.setString(2,name);
+                        preparedStatement.setString(3,fathername);
+                        preparedStatement.setString(4,gender);
+                        preparedStatement.setString(5,date);
+                        preparedStatement.setString(6,email);
+                        preparedStatement.setString(7,adress);
+                        preparedStatement.setString(8,city);
+                        preparedStatement.setString(9,pincode);
+                        preparedStatement.setString(10,married);
+                        int affrow = preparedStatement.executeUpdate();
+
+                        if (affrow>0) {
+                            System.out.print(affrow);
+                            System.out.println(" Data Inserted Sign-up one");
+
+                            setVisible(false);
+                            new SignUpTwo(formNo).setVisible(true);
+                        }
 
                     }
 

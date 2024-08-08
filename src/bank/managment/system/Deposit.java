@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.util.Date;
 
 public class Deposit extends JFrame implements ActionListener {
@@ -72,10 +73,12 @@ public class Deposit extends JFrame implements ActionListener {
                     Connect c = new Connect();
 
                     //String query = "create table bank(pin varchar(10),date varchar(50),type varchar(20),amount varchar(20))";
-
-                    String query = "insert into bank values('" + pin + "','" + date + "','Deposit','" + number + "')";
-
-                    c.stmt.executeUpdate(query);
+                    PreparedStatement preparedStatement=c.con.prepareStatement("INSERT INTO bank(pin, date, type, amount) values(?,?,?,?)");
+                    preparedStatement.setString(1,pin);
+                    preparedStatement.setString(2,date+"");
+                    preparedStatement.setString(3,"Deposit");
+                    preparedStatement.setString(4,number);
+                    preparedStatement.executeUpdate();
                     System.out.println("......Deposit Rs.  ONE ROW INSRTED IN DATABASE ......");
 
                     JOptionPane.showMessageDialog(null, "Rs." + number + "Deposit Successfully..");

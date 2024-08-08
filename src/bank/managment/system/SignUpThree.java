@@ -3,6 +3,7 @@ package bank.managment.system;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.PreparedStatement;
 import java.util.*;
 
 public class SignUpThree extends JFrame implements ActionListener{
@@ -258,10 +259,21 @@ public class SignUpThree extends JFrame implements ActionListener{
                 if(atype.equals("")){
                     JOptionPane.showMessageDialog(null, "Fill all the required fields");
                 }else{
-                    Connect c1 = new Connect();
-                    c1.stmt.addBatch("insert into signupthree values('"+formno+"','"+atype+"','"+cardno+"','"+pin+"','"+facility+"')");
-                    c1.stmt.addBatch("insert into login values('"+formno+"','"+cardno+"','"+pin+"')");
-                    c1.stmt.executeBatch();
+                    Connect c = new Connect();
+                    PreparedStatement preparedStatement=c.con.prepareStatement("INSERT INTO signupthree(formno, accountType, cardnumber, pin, facility) values(?,?,?,?,?)");
+                    preparedStatement.setString(1,formno);
+                    preparedStatement.setString(2,atype);
+                    preparedStatement.setString(3,cardno);
+                    preparedStatement.setString(4,pin);
+                    preparedStatement.setString(5,facility);
+                    int ar= preparedStatement.executeUpdate();
+                    System.out.println(ar+" Data Inserted In Sign-Up Three");
+                    PreparedStatement preparedStatement1=c.con.prepareStatement("INSERT INTO login(formno, cardnumber, pin) values(?,?,?)");
+                    preparedStatement1.setString(1,formno);
+                    preparedStatement1.setString(2,cardno);
+                    preparedStatement1.setString(3,pin);
+                    int arr= preparedStatement1.executeUpdate();
+                    System.out.println(arr+" Login Card No. and Pin Created & Stored.");
                     JOptionPane.showMessageDialog(null, "Card Number: " + cardno + "\n PinChange:"+ pin);
                     setVisible(false);
                     new Deposit(pin).setVisible(true);

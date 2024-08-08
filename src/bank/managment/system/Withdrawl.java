@@ -4,10 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
 
-public class Withdrawl extends JFrame implements ActionListener {
+public class  Withdrawl extends JFrame implements ActionListener {
 
         private JTextField amount;
         private JButton button1,button2;
@@ -71,9 +72,13 @@ public class Withdrawl extends JFrame implements ActionListener {
                                 new progressBar(pin).setVisible(true);
                             //String query = "create table bank(pin varchar(10),date varchar(50),type varchar(20),amount varchar(20))";
                             Connect c = new Connect();
-                            String query = "insert into bank values('"+pin+"','"+date+"','Withdrawl','"+number+"')";
-
-                            c.stmt.executeUpdate(query);
+                            String query = "INSERT INTO bank(pin, date, type, amount) values(?,?,?,?)";
+                            PreparedStatement preparedStatement=c.con.prepareStatement(query);
+                            preparedStatement.setString(1,pin);
+                            preparedStatement.setString(2,date+"");
+                            preparedStatement.setString(3,"Withdrawl");
+                            preparedStatement.setString(4,number);
+                            preparedStatement.executeUpdate();
                             System.out.println("......  ONE ROW INSRTED IN DATABASE ......");
 
                             JOptionPane.showMessageDialog(null,"Rs."+number+" Withdrawal Successfully..");

@@ -93,13 +93,22 @@ public class PinChange extends JFrame implements ActionListener{
                 }
 
                 Connect c1 = new Connect();
-                String q1 = "update bank set pin = '"+rpin+"' where pin = '"+pin+"' ";
-                String q2 = "update login set pin = '"+rpin+"' where pin = '"+pin+"' ";
-                String q3 = "update signupthree set pin = '"+rpin+"' where pin = '"+pin+"' ";
+                String q1 = "update bank set pin = ? where pin = ? ";
+                String q2 = "update login set pin = ? where pin = ? ";
+                String q3 = "update signupthree set pin = ? where pin = ? ";
 
-                c1.stmt.executeUpdate(q1);
-                c1.stmt.executeUpdate(q2);
-                c1.stmt.executeUpdate(q3);
+                PreparedStatement preparedStatement=c1.con.prepareStatement(q1);
+                preparedStatement.setString(1,rpin);
+                preparedStatement.setString(2,pin);
+                PreparedStatement preparedStatement1=c1.con.prepareStatement(q2);
+                preparedStatement1.setString(1,rpin);
+                preparedStatement1.setString(2,pin);
+                PreparedStatement preparedStatement2=c1.con.prepareStatement(q3);
+                preparedStatement2.setString(1,rpin);
+                preparedStatement2.setString(2,pin);
+                preparedStatement.executeUpdate();
+                preparedStatement1.executeUpdate();
+                preparedStatement2.executeUpdate();
 
                 JOptionPane.showMessageDialog(null, "PIN changed successfully");
                 setVisible(false);

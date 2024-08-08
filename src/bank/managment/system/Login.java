@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class Login extends JFrame {
@@ -64,6 +65,8 @@ public class Login extends JFrame {
                 String cardn = card_no.getText();
                 String pin = card_pin.getText();
 
+
+
                 if (cardn.equals("")){
                     JOptionPane.showMessageDialog(null,"Enter a Card Number Please");
                     if (pin.equals("")){
@@ -73,10 +76,11 @@ public class Login extends JFrame {
                 }else {
                     try {
                         Connect c = new Connect();
-                        String qu = "Select * from login where cardnumber = '" + cardn + "'and pin = '" + pin + "'";
+                        PreparedStatement preparedStatement=c.con.prepareStatement("Select * from login where cardnumber = ? and pin = ? ");
                         System.out.println("card no. and pin match successfully");
-
-                        ResultSet rs = c.stmt.executeQuery(qu);
+                        preparedStatement.setString(1,cardn);
+                        preparedStatement.setString(2,pin);
+                        ResultSet rs = preparedStatement.executeQuery();
 
                         if (rs.next()) {
                             setVisible(false);
